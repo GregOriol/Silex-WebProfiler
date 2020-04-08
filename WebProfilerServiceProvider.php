@@ -145,7 +145,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
             });
 
             $app['twig.profiler.profile'] = function () {
-                return new \Twig_Profiler_Profile();
+                return new \Twig\Profiler\Profile();
             };
         }
 
@@ -210,11 +210,11 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
             };
 
             $app['twig'] = $app->extend('twig', function ($twig, $app) {
-                $twig->addFilter(new \Twig_SimpleFilter('yaml_encode', function (array $var) {
+                $twig->addFilter(new \Twig\TwigFilter('yaml_encode', function (array $var) {
                     return Yaml::dump($var);
                 }));
 
-                $twig->addFunction(new \Twig_SimpleFunction('yaml_encode', function (array $var) {
+                $twig->addFunction(new \Twig\TwigFunction('yaml_encode', function (array $var) {
                     return Yaml::dump($var);
                 }));
 
