@@ -18,6 +18,7 @@ use Silex\Api\BootableProviderInterface;
 use Silex\Api\EventListenerProviderInterface;
 use Silex\Application;
 use Silex\ServiceControllerResolver;
+use Silex\WebProfiler\SilexConfigDataCollectorKernelWrapper;
 use Symfony\Bridge\Twig\DataCollector\TwigDataCollector;
 use Symfony\Bridge\Twig\Extension\CodeExtension;
 use Symfony\Bridge\Twig\Extension\ProfilerExtension;

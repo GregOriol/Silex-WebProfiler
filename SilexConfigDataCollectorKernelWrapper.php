@@ -1,6 +1,6 @@
 <?php
 
-namespace Silex\Provider;
+namespace Silex\WebProfiler;
 
 use Silex\Application;
 use Symfony\Component\Config\Loader\LoaderInterface;
