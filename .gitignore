@@ -1,4 +1,8 @@
 /vendor/
-composer.lock
-phpunit.xml
+/composer.lock
+/composer.phar
+/phpunit.xml
+/.phpunit.result.cache
 /Tests/cache
+/.idea
+.DS_Store
