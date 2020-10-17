@@ -104,7 +104,12 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
 
         $app['data_collectors'] = function ($app) {
             return array(
-                'config' => function ($app) { return new ConfigDataCollector(); },
+                'config' => function ($app) {
+                    $silexWrapper = new SilexConfigDataCollectorKernelWrapper($app);
+                    $dataCollector = new ConfigDataCollector();
+                    $dataCollector->setKernel($silexWrapper);
+                    return $dataCollector;
+                },
                 'request' => function ($app) { return new RequestDataCollector(); },
                 'exception' => function ($app) { return new ExceptionDataCollector(); },
                 'events' => function ($app) { return new EventDataCollector($app['dispatcher']); },
