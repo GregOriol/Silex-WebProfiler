@@ -251,7 +251,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         };
 
         $app['web_profiler.controller.exception'] = function ($app) {
-            return new ExceptionPanelController(new HtmlErrorRenderer($app['debug']), $app['profiler']);
+            return new ExceptionPanelController(new HtmlErrorRenderer($app['debug'], $app['twig']->getCharset()), $app['profiler']);
         };
 
         $app['web_profiler.toolbar.listener'] = function ($app) {
@@ -359,8 +359,8 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         $controllers = $app['controllers_factory'];
 
         $controllers->get('/router/{token}', 'web_profiler.controller.router:panelAction')->bind('_profiler_router');
-        $controllers->get('/exception/{token}.css', 'web_profiler.controller.exception:cssAction')->bind('_profiler_exception_css');
-        $controllers->get('/exception/{token}', 'web_profiler.controller.exception:showAction')->bind('_profiler_exception');
+        $controllers->get('/exception/{token}.css', 'web_profiler.controller.exception:stylesheet')->bind('_profiler_exception_css');
+        $controllers->get('/exception/{token}', 'web_profiler.controller.exception:body')->bind('_profiler_exception');
         $controllers->get('/search', 'web_profiler.controller.profiler:searchAction')->bind('_profiler_search');
         $controllers->get('/search_bar', 'web_profiler.controller.profiler:searchBarAction')->bind('_profiler_search_bar');
         $controllers->get('/purge', 'web_profiler.controller.profiler:purgeAction')->bind('_profiler_purge');
