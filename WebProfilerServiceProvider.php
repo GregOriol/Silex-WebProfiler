@@ -22,11 +22,12 @@ use Symfony\Bridge\Twig\DataCollector\TwigDataCollector;
 use Symfony\Bridge\Twig\Extension\CodeExtension;
 use Symfony\Bridge\Twig\Extension\ProfilerExtension;
 use Symfony\Bundle\SecurityBundle\DataCollector\SecurityDataCollector;
-use Symfony\Bundle\WebProfilerBundle\Controller\ExceptionController;
+use Symfony\Bundle\WebProfilerBundle\Controller\ExceptionPanelController;
 use Symfony\Bundle\WebProfilerBundle\Controller\RouterController;
 use Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController;
 use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 use Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension;
+use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\DataCollector\FormDataCollector;
 use Symfony\Component\Form\Extension\DataCollector\FormDataExtractor;
@@ -103,7 +104,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
 
         $app['data_collectors'] = function ($app) {
             return array(
-                'config' => function ($app) { return new ConfigDataCollector('Silex', Application::VERSION); },
+                'config' => function ($app) { return new ConfigDataCollector(); },
                 'request' => function ($app) { return new RequestDataCollector(); },
                 'exception' => function ($app) { return new ExceptionDataCollector(); },
                 'events' => function ($app) { return new EventDataCollector($app['dispatcher']); },
@@ -245,7 +246,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         };
 
         $app['web_profiler.controller.exception'] = function ($app) {
-            return new ExceptionController($app['profiler'], $app['twig'], $app['debug']);
+            return new ExceptionPanelController(new HtmlErrorRenderer($app['debug']), $app['profiler']);
         };
 
         $app['web_profiler.toolbar.listener'] = function ($app) {
@@ -323,7 +324,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         };
 
         $app['profiler.templates_path.twig'] = function () {
-            $r = new \ReflectionClass('Symfony\Bundle\TwigBundle\Controller\ExceptionController');
+            $r = new \ReflectionClass('Symfony\Bundle\WebProfilerBundle\Controller\ExceptionPanelController');
 
             return dirname(dirname($r->getFileName())).'/Resources/views';
         };
