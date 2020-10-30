@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "silex/silex": "dev-symfony-4.x",
+        "silex/silex": "2.4.x-dev",
         "symfony/web-profiler-bundle": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/twig-bridge": "^4.0",
